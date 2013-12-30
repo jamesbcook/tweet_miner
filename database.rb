@@ -52,7 +52,7 @@ class PGDatabase < SQLCommands
 
   def prepare(columns,values)
     value_place_holder = []
-    values.each_with_index {|val,index| value_place_holder << "$#{index+1}"}  
+    values.each_with_index {|_,index| value_place_holder << "$#{index+1}"}  
     @con.prepare('insert',"insert into #{@table_name} (#{columns.join(',')}) values(#{value_place_holder.join(',')})")
     @con.exec_prepared('insert',[*values])
     self.execute("DEALLOCATE insert")

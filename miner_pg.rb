@@ -8,16 +8,15 @@ def build_db(db_name,table_name)
   begin
   @db = PGDatabase.new(db_name,'localhost',5432,'postgres')
   @db.create_table(table_name,
-                  id: 'serial PRIMARY KEY',
-                  text: 'text',
-                  username: 'text',
-                  guid: 'bigint',
-                  lang: 'text',
-                  time_zone: 'text',
-                  created_at: 'text')
+                  :id => 'serial PRIMARY KEY',
+                  :text => 'text',
+                  :username => 'text',
+                  :guid => 'bigint',
+                  :lang => 'text',
+                  :time_zone => 'text',
+                  :created_at => 'text')
   rescue => e
     puts e
-    #puts "#{table_name} table already created"
   end
 end
 
@@ -45,12 +44,12 @@ begin
   tweet_stream
   @client.track(ARGV[2]) do |status|
     begin
-      @db.insert(text: status.text,
-                 username: status.user.screen_name,
-                 guid: status[:id],
-                 lang: status.user.lang,
-                 time_zone: status.user.time_zone,
-                 created_at: status.created_at)
+      @db.insert(:text => status.text,
+                 :username => status.user.screen_name,
+                 :guid => status[:id],
+                 :lang => status.user.lang,
+                 :time_zone => status.user.time_zone,
+                 :created_at => status.created_at)
       puts "[#{status.user.screen_name}] #{status.text}"
     rescue => e
       puts e
