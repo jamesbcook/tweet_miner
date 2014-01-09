@@ -35,7 +35,7 @@ class SQLCommands
   def prepare(columns,values)
     value_place_holder = (['?'] * values.size).join(',')
     insert = @con.prepare("insert into #{@table_name} (#{columns.join(',')}) values(#{value_place_holder})")
-    insert.execute("#{values.join(',')}")
+    insert.execute(*values)
   end
 
 end
